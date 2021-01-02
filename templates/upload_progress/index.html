@@ -1,16 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'upload_progress/css/style.css' %}">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
-		function on_progress(evt) {       //看这个函数之前先看upload函数。这个函数可以接收一个evt(event)对象(细节自行查询progress)，他有3个属性lengthComputable，loaded，total，第一个属性是个bool类型的，代表是否支持，第二个代表当前上传的大小，第三个为总的大小，由此便可以计算出实时上传的百分比
-			if(evt.lengthComputable) {
-				var ele = document.getElementById('2');
-				var percent = Math.round((evt.loaded) * 100 / evt.total);
-				ele.style.width = percent + '%';
-				document.getElementById('3').innerHTML = percent + '%';
+		function on_progress(e) {       //看这个函数之前先看upload函数。这个函数可以接收一个evt(event)对象(细节自行查询progress)，他有3个属性lengthComputable，loaded，total，第一个属性是个bool类型的，代表是否支持，第二个代表当前上传的大小，第三个为总的大小，由此便可以计算出实时上传的百分比
+			if(e.lengthComputable) {
+                let percent = (e.loaded / e.total) * 100 + '%';
+                $('.progress > div').css('width', percent);
+                $('#percent').get(0).innerHTML = percent;
 			}
 		}
 		function upload() {
@@ -34,15 +35,17 @@
 <body>
 	<form>
         {% csrf_token %}
-		<div id='1' style="height:20px;width:100px;border:2px solid gray;float:left;margin-right:10px;">
+		{% comment %}<div id='1' style="height:20px;width:100px;border:2px solid gray;float:left;margin-right:10px;">
 			<div id='2' style="height:100%;width:0px;background:gray;"></div>
 
 		</div>
-		<b style="margin-right:20px" id='3'>0%</b>
-
+		<b style="margin-right:20px" id='3'>0%</b>{% endcomment %}
+        <div class="progress">
+            <div></div>
+        </div>
+        <b id="percent" class="percent">0%</b>
 		<input type="file" id='file' class='file' name="file" multiple="multiple"><br><br>
 		<button type="button" onclick="upload();">上传</button>
-
 	</form>
 </body>
 </html>
