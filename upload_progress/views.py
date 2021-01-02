@@ -12,8 +12,9 @@ class UploadPage(View):
 
 class Upload(View):
     def post(self, request):
-        file = request.FILES['file']
-        self.handle_uploaded_file(file)
+        files = request.FILES.getlist('file')
+        for file in files:
+            self.handle_uploaded_file(file)
         return HttpResponse('done')
 
     def handle_uploaded_file(self, f):
