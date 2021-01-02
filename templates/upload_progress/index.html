@@ -19,7 +19,7 @@
 			var form = new FormData();   //FormData是HTML5为实现序列化表单而提供的类，更多细节可自行查询
             form.append('file',file);   //这里为序列化表单对象form添加一个元素，即file
 			xhr.upload.addEventListener('progress',on_progress,false);     //xhr对象含有一个upload对象，它有一个progress事件，在文件上传过程中会被不断触发，我们为这个事件对应一个处理函数，每当事件触发就会调用这个函数，于是便可利用这个函数来修改当前进度，更多细节可自行查询
-			xhr.open('POST','http://127.0.0.1/upload_progress/upload/',true);  //请将url改成上传url
+			xhr.open('POST','http://127.0.0.1:8000/upload_progress/upload/',true);  //请将url改成上传url
             xhr.setRequestHeader('X-CSRFTOKEN','{{ request.COOKIES.csrftoken }}');   //此处为Django要求，可无视，或者换成相应后台所要求的CSRF防护，不是django用户请去掉
 			xhr.send(form);   //发送表单
 		}
