@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>最帅</title>
+</head>
+<body>
+    <ul>
+        {% for k,v in user_list.items %}
+            <li style="cursor: pointer;" ondblclick="doVote('{{k}}')" id="user_{{k}}">{{k}}: {{v.name}} <span>{{v.count}}</span> </li>
+        {% endfor %}
+    </ul>
+    <!--<script src="/static/jquery-1.12.4.js"></script>-->
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+        $(function () {
+            get_data();
+        });
+
+        /*
+        查询最新信息
+         */
+        function get_data() {
+            $.ajax({
+                url: '{% url 'vote:query' %}',
+                type:'GET',
+                dataType:'json',
+                success:function (arg) {
+                    if(arg.status) {
+                        let liId = "#user_" + arg.data.uid;
+                        $(liId).find('span').text(arg.data.count);
+                    }
+                    get_data();
+                }
+
+            })
+        }
+
+        /*
+        投票
+         */
+        function doVote(uid) {
+            $.ajax({
+                url:'{% url 'vote:vote' %}',
+                type:'GET',
+                data:{
+                    uid:uid
+                },
+                success:function (arg) {
+
+                }
+            })
+        }
+    </script>
+</body>
+</html>

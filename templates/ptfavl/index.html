@@ -1,0 +1,88 @@
+<head>
+    <title>PTFAVL</title>
+</head>
+<body style="font-family: Verdana, Arial;">
+{% block main %}
+<div style="text-align: center; font-size: x-large">
+    <p style="color: #284E98;">PTFAVL</p>
+</div>
+<div style="vertical-align: middle; text-align: center">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        Part number:
+        <label><input type="text" name="partnumber" placeholder="enter the partnumber"></label></br>
+        {% if is_test_user %}
+            mode:
+            <input type="radio" name="mode" id="t" value="t" checked="true">
+            <label for="t">test</label>
+            <input type="radio" name="mode" id="p" value="p">
+            <label for="p">production</label><br/>
+        {% endif %}
+{#        <button style="margin-top: 10px" id="submit" type="submit">execute</button>#}
+{#    <button style="margin-top: 10px" id="submit" type="button" onclick="window.location.href='{% url 'ptfavl:index' %}'">execute</button>#}
+    <button style="margin-top: 10px" id="submit" type="button" onclick="execute()">execute</button>
+    </form>
+    <textarea id="log" cols="100" rows="20" style="margin-top: 10px" placeholder="HELP: Please enter the partnumber in the textbox above whose STATUS you wish to change from L-TMP to AVL"></textarea>
+</div>
+{% endblock %}
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+    });
+
+    $(function () {
+        get_message();
+    });
+
+    function get_message() {
+        let message = $.ajax({
+            url: '{% url 'ptfavl:get_message' %}',
+            type: 'GET',
+            dataType: 'text',
+            success: function (data) {
+                if (data === "done") {
+                    message.abort();
+                }else {
+                    document.querySelector('#log').value += (data + '\n');
+                    get_message();
+                }
+            },
+            error: function(err) {
+                console.log(err)
+            }
+        })
+    }
+
+    function execute(){
+        $.ajax({
+            url: '{% url 'ptfavl:execute' %}',
+            type: 'post',
+            data: {
+                pn: 'good'
+            },
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    {% comment %}function get_message() {
+        $.ajax({
+            url: '{% url 'ptfavl:get_message' %}',
+            type: 'GET',
+            dataType: 'text',
+            complete: get_message,
+            timeout: 60000,
+            success: function (data) {
+                document.querySelector('#log').value += (data+'\n') ;
+            },
+            error: function(err) {
+                console.log(err)
+            }
+        })
+    }{% endcomment %}
+
+</script>
+</body>
