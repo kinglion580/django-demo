@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'chat',
+    'upload_progress',
     'sql.apps.SqlConfig',
     'django.contrib.admin',
     'django.contrib.auth',
