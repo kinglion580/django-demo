@@ -15,37 +15,37 @@
             }
         }
 
-        $(function() {
-            $('#file').change(function () {
-                if ($('#file').get(0).files.length > 0) {
-                    $('.progress > div').css('width', 0);
-                    $('#percent').get(0).innerHTML = 0 + '%';
-                    $('.progress').css('display', 'block');
-                    $('.percent').css('display', 'block');
-                }
-                else {
-                    $('.progress').css('display', 'none');
-                    $('.percent').css('display', 'none');
-                }
-            })
-        });
+        function fileChange(target) {
+            console.log(target)
+            if (target.files.length !== 3) {
+                alert('please select 3 files')
+            } else if (target.files.length > 0) {
+                $('.progress > div').css('width', 0);
+                $('#percent').get(0).innerHTML = 0 + '%';
+                $('.progress').css('display', 'block');
+                $('.percent').css('display', 'block');
+            } else {
+                $('.progress').css('display', 'none');
+                $('.percent').css('display', 'none');
+            }
+        }
 
         function upload() {
             let formdata = new FormData($('form').get(0));   //FormData是HTML5为实现序列化表单而提供的类，更多细节可自行查询
             //xhr对象含有一个upload对象，它有一个progress事件，在文件上传过程中会被不断触发，我们为这个事件对应一个处理函数，每当事件触发就会调用这个函数，于是便可利用这个函数来修改当前进度，更多细节可自行查询
             if ($('#file').get(0).files.length > 0) {
-            $.ajax({
-                url: '{% url 'upload_progress:upload' %}',
-                type: 'post',
-                data: formdata,
-                processData: false,
-                contentType: false,
-                xhr: function () {
-                    let xhr = new XMLHttpRequest();
-                    xhr.upload.addEventListener('progress', on_progress, false);
-                    return xhr;
-                }
-            })
+                $.ajax({
+                    url: '{% url 'upload_progress:upload' %}',
+                    type: 'post',
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    xhr: function () {
+                        let xhr = new XMLHttpRequest();
+                        xhr.upload.addEventListener('progress', on_progress, false);
+                        return xhr;
+                    }
+                })
             }
         }
     </script>
@@ -62,7 +62,7 @@
         <div></div>
     </div>
     <b id="percent" class="percent">0%</b>
-    <input type="file" id='file' class='file' name="file" multiple="multiple"><br><br>
+    <input type="file" id='file' class='file' name="file" multiple="multiple" onchange="fileChange(this)"><br><br>
     <button type="button" onclick="upload();">上传</button>
 </form>
 </body>
