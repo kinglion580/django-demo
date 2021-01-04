@@ -11,6 +11,7 @@
             if (e.lengthComputable) {
                 let percent = (e.loaded / e.total) * 100 + '%';
                 $('.progress > div').css('width', percent);
+                $('.progress > div').html(percent)
                 $('#percent').get(0).innerHTML = percent;
             }
         }
@@ -20,7 +21,7 @@
             if (target.files.length !== 3) {
                 alert('please select 3 files')
             } else if (target.files.length > 0) {
-                $('.progress > div').css('width', 0);
+                $('.progress > div').width(0);
                 $('#percent').get(0).innerHTML = 0 + '%';
                 $('.progress').css('display', 'block');
                 $('.percent').css('display', 'block');

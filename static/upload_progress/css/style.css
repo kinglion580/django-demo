@@ -1,6 +1,6 @@
 .progress {
     width: 600px;
-    height: 10px;
+    height: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin: 10px 0;
@@ -13,6 +13,8 @@
     height: 100%;
     background-color: yellowgreen;
     transition: all .3s ease;
+    text-align: center;
+    justify-content: center;
 }
 
 .percent {
