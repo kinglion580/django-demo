@@ -23,5 +23,6 @@ urlpatterns = [
     path('ptfavl/', include('ptfavl.urls')),
     path('vote/', include('vote.urls')),
     path('upload_progress/', include('upload_progress.urls')),
+    path('largeFileUpload/', include('largeFileUpload.urls')),
     path('admin/', admin.site.urls),
 ]

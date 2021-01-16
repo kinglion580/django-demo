@@ -32,10 +32,6 @@
         data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
     });
 
-    $(function () {
-        get_message();
-    });
-
     function get_message() {
         let message = $.ajax({
             url: '{% url 'ptfavl:get_message' %}',
@@ -56,6 +52,7 @@
     }
 
     function execute(){
+        get_message();
         $.ajax({
             url: '{% url 'ptfavl:execute' %}',
             type: 'post',
