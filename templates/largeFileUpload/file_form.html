@@ -1,5 +1,5 @@
 <form method="post" action="{% url 'largeFileUpload:index' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
+    <input type="file" name="file" multiple>
     <input type="submit" value="upload">
 </form>
