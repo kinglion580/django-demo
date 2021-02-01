@@ -18,12 +18,14 @@
     {% endblock %}
 </head>
 <body>
-<div class="row h-100 justify-content-center align-items-center">
+<!--<div class="row h-100 justify-content-center align-items-center">-->
+<div class="container">
 {% block content %}
 {% endblock %}
 </div>
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.widget.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-4.5.3.min.js' %}"></script>
 {% block js %}
 {% endblock %}
