@@ -24,5 +24,6 @@ urlpatterns = [
     path('vote/', include('vote.urls')),
     path('upload_progress/', include('upload_progress.urls')),
     path('largeFileUpload/', include('largeFileUpload.urls')),
+    path('large_file_upload', include('large_file_upload.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -1,0 +1,16 @@
+{% load static %}
+<h1>large_file_upload</h1>
+{#<input id="fileupload" name="file" type="file" multiple>#}
+{{ file_form }}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.widget.min.js' %}"></script>
+<script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
+<script src="{% static 'js/jquery.fileupload.js' %}"></script>
+<script>
+$(function () {
+    $('#fileupload').fileupload({
+        url: '{% url 'large_file_upload:index' %}',
+        dataType: 'json',
+    });
+})
+</script>

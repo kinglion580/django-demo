@@ -1,10 +1,14 @@
 {% extends 'largeFileUpload/base.html' %}
 {% load static %}
 {% block content %}
+    {% csrf_token %}
     <span class="btn btn-success fileinput-button">
     <span>Select files</span>
     <input id="fileupload" type="file" name="file" multiple>
     </span>
+    <div id="progress" class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated"></div>
+    </div>
     {% comment %}<form id="fileupload" method="post" action="{% url 'largeFileUpload:index' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row fileupload-buttonbar">
@@ -43,6 +47,7 @@
             var csrftoken = $.cookie('csrftoken');
             $('#fileupload').fileupload({
                 url: url,
+                maxChunkSize: 1000000,
                 crossDomain: false,
                 beforeSend: function (xhr, settings) {
                     if (!csrfSafeMethod(settings.type)) {

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'upload_progress',
     'sql.apps.SqlConfig',
     'largeFileUpload',
+    'large_file_upload',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
